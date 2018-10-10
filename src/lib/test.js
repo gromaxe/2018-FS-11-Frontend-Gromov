@@ -9,6 +9,6 @@ const say = function (some_text) {
     new_block.style.backgroundColor='#4283c4';
     new_block.innerHTML=some_text;
     document.body.appendChild(new_block);
-}
+} 
 
 export default say;
