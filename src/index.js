@@ -1,2 +1,3 @@
 import say from './lib/test.js';
-say('Hello there!')
+import css from './styles.css';
+say('Hello there!');
