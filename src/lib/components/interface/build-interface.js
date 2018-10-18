@@ -14,11 +14,19 @@ const buildInterface = function () {
     const footer = document.createElement('div');
     footer.id = 'footer';
     document.getElementById('container').appendChild(footer);
+
+    const messageField = document.createElement('input');
+    messageField.id = 'messageField';
+    document.getElementById('footer').appendChild(messageField);
+
+    const messageActions = document.createElement('div');
+    messageActions.id = 'messageActions';
+    document.getElementById('footer').appendChild(messageActions);
 };
 
 const add_minor_elements = function(){
     const arrow_back = document.createElement('img');
-    arrow_back.src = 'static/ic_arrow_back_white_24dp.png';
+    arrow_back.src = '../../static/ic_arrow_back_white_24dp.png';
     arrow_back.style.position = 'relative';
     arrow_back.style.left = '20px';
     arrow_back.style.top = '20px';
@@ -27,7 +35,7 @@ const add_minor_elements = function(){
     document.getElementById('header').appendChild(arrow_back);
 
     const search = document.createElement('img');
-    search.src = 'static/ic_search_white_24dp.png';
+    search.src = '../../static/ic_search_white_24dp.png';
     search.style.position = 'relative';
     search.style.left = 'calc(100% - 80px)';
     search.style.top = '20px';
@@ -36,7 +44,7 @@ const add_minor_elements = function(){
     document.getElementById('header').appendChild(search);
 
     const more_vert = document.createElement('img');
-    more_vert.src = 'static/ic_more_vert_white_24dp.png';
+    more_vert.src = '../../static/ic_more_vert_white_24dp.png';
     more_vert.style.position = 'relative';
     more_vert.style.left = 'calc(100% - 60px)';
     more_vert.style.top = '20px';
@@ -45,24 +53,35 @@ const add_minor_elements = function(){
     document.getElementById('header').appendChild(more_vert);
 
     const attachment = document.createElement('img');
-    attachment.src = 'static/ic_attachment_black_24dp.png';
+    attachment.src = '../../static/ic_attachment_black_24dp.png';
     attachment.style.position = 'relative';
-    attachment.style.left = 'calc(100% - 32px)';
+    attachment.style.left = '5px';
     attachment.style.top = '20px';
     attachment.style.height = '16px';
     attachment.style.width = '16px';
-    document.getElementById('footer').appendChild(attachment);
+    document.getElementById('messageActions').appendChild(attachment);
 
     const send = document.createElement('img');
-    send.src = 'static/ic_send_black_24dp.png';
+    send.src = '../../static/ic_send_black_24dp.png';
     send.style.position = 'relative';
-    send.style.left = 'calc(100% - 80px)';
+    send.style.left = '20px';
     send.style.top = '20px';
     send.style.height = '16px';
     send.style.width = '16px';
-    document.getElementById('footer').appendChild(send);
+    document.getElementById('messageActions').appendChild(send);
 }
 
 
 buildInterface();
 add_minor_elements();
+
+document.getElementById("messageField").addEventListener("keypress", function(){
+    if (event.keyCode === 13) {
+        const NewMsg = document.createElement('div');
+        NewMsg.className = 'shaped';
+        NewMsg.innerHTML = this.value;
+        this.value = '';
+        document.getElementById('main').appendChild(NewMsg);
+    }
+
+});
