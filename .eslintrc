@@ -1,6 +1,9 @@
 {
-  "extends": "airbnb/legacy",
-  "rules": {
-    "func-names": ["error", "never"]
+  "browser":true,
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module",
+    "allowImportExportEverywhere": false,
+    "codeFrame": true
   }
 }
