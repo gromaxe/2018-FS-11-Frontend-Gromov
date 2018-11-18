@@ -1,3 +1,5 @@
+import {MyMessage} from "../message";
+
 const buildInterface = function () {
     const container = document.createElement('div');
     container.id = 'container';
@@ -69,19 +71,24 @@ const add_minor_elements = function(){
     send.style.height = '16px';
     send.style.width = '16px';
     document.getElementById('messageActions').appendChild(send);
-}
 
 
-buildInterface();
-add_minor_elements();
+    const SmbMsg = new MyMessage();
+    SmbMsg.className = 'messageSmb';
+    SmbMsg.innerHTML = 'Hello there!';
+    document.getElementById('main').appendChild(SmbMsg);
 
-document.getElementById("messageField").addEventListener("keypress", function(){
-    if (event.keyCode === 13) {
-        const NewMsg = document.createElement('div');
-        NewMsg.className = 'shaped';
-        NewMsg.innerHTML = this.value;
-        this.value = '';
-        document.getElementById('main').appendChild(NewMsg);
-    }
+    document.getElementById("messageField").addEventListener("keypress", function(){
+        if (event.keyCode === 13) {
+            const NewMsg = new MyMessage();
+            NewMsg.className = 'messageMy';
+            NewMsg.innerHTML =this.value;
+            this.value = '';
+            document.getElementById('main').appendChild(NewMsg);
 
-});
+        }
+    });
+};
+
+export {buildInterface};
+export {add_minor_elements};

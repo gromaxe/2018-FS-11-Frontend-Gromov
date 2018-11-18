@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const sourceRoot = path.resolve(__dirname, 'src');
 
 module.exports = {
+        target: "web",
 	entry: {
 		create: sourceRoot + '/app/create/index.js'
 	},
@@ -11,6 +12,12 @@ module.exports = {
 		path: path.resolve(__dirname, 'dist'),
 		//publicPath: '/static/',
 		filename: '[name]/bundle.js'
+	},
+	
+  	devServer: {
+    	publicPath: './dist/',
+	contentBase: './dist/',
+    	watchContentBase: true
 	},
 	module: {
 		rules: [
@@ -22,22 +29,15 @@ module.exports = {
 				}
 			},
 			{
-				test: /shadow\.css$/,
+				test: /\.css$/,
 				include: sourceRoot,
-				use: {
-					loader: 'css-loader'
-				}
-			},
-			{
-				test: /index\.css$/,
-				include: sourceRoot,
-				use: ExtractTextPlugin.extract('css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]')
+                use: ExtractTextPlugin.extract('css-loader')
 			}
 		]
 	},
 	plugins: [
 		new ExtractTextPlugin({
-			filename: '[name]/style.css'
+			filename: '[name]/styles.css'
 		}),
 		new HtmlWebpackPlugin({
 			filename: 'create/index.html',
