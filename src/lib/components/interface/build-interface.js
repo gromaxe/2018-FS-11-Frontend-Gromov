@@ -28,6 +28,7 @@ const buildInterface = function () {
 
 const add_minor_elements = function(){
     const arrow_back = document.createElement('img');
+    arrow_back.id = 'arrow_back';
     arrow_back.src = '../../static/ic_arrow_back_white_24dp.png';
     arrow_back.style.position = 'relative';
     arrow_back.style.left = '20px';
@@ -37,6 +38,7 @@ const add_minor_elements = function(){
     document.getElementById('header').appendChild(arrow_back);
 
     const search = document.createElement('img');
+    search.id = 'search';
     search.src = '../../static/ic_search_white_24dp.png';
     search.style.position = 'relative';
     search.style.left = 'calc(100% - 80px)';
@@ -46,6 +48,7 @@ const add_minor_elements = function(){
     document.getElementById('header').appendChild(search);
 
     const more_vert = document.createElement('img');
+    more_vert.id = 'more_vert';
     more_vert.src = '../../static/ic_more_vert_white_24dp.png';
     more_vert.style.position = 'relative';
     more_vert.style.left = 'calc(100% - 60px)';
@@ -55,6 +58,7 @@ const add_minor_elements = function(){
     document.getElementById('header').appendChild(more_vert);
 
     const attachment = document.createElement('img');
+    attachment.id = 'attachment';
     attachment.src = '../../static/ic_attachment_black_24dp.png';
     attachment.style.position = 'relative';
     attachment.style.left = '5px';
@@ -64,12 +68,17 @@ const add_minor_elements = function(){
     document.getElementById('messageActions').appendChild(attachment);
 
     const send = document.createElement('img');
+    send.id = 'send';
     send.src = '../../static/ic_send_black_24dp.png';
     send.style.position = 'relative';
     send.style.left = '20px';
     send.style.top = '20px';
     send.style.height = '16px';
     send.style.width = '16px';
+    send.onclick = function(){
+        var sendMsg = new CustomEvent("sendMsg", {bubbles: true});
+        this.dispatchEvent(sendMsg);
+    };
     document.getElementById('messageActions').appendChild(send);
 
 
@@ -80,15 +89,18 @@ const add_minor_elements = function(){
 
     document.getElementById("messageField").addEventListener("keypress", function(){
         if (event.keyCode === 13) {
-            const NewMsg = new MyMessage();
-            NewMsg.className = 'messageMy';
-            NewMsg.innerHTML =this.value;
-            this.value = '';
-            document.getElementById('main').appendChild(NewMsg);
-
+            var sendMsg = new CustomEvent("sendMsg", {bubbles: true});
+            this.dispatchEvent(sendMsg);
         }
     });
-};
 
+    document.addEventListener("sendMsg", function(){
+        const NewMsg = new MyMessage();
+        NewMsg.className = 'messageMy';
+        NewMsg.innerHTML = document.getElementById("messageField").value;
+        document.getElementById("messageField").value = '';
+        document.getElementById('main').appendChild(NewMsg);
+    });
+};
 export {buildInterface};
 export {add_minor_elements};
