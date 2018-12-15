@@ -1,0 +1,213 @@
+#container {
+  position: absolute;
+/*    border: 4px double black;*/
+  box-sizing: content-box;
+  height: 100%;/*640px;*/
+  width: 100%;/*360px;*/
+  display: flex;
+  flex-direction: column;
+
+    flex-grow: 1;
+
+    overflow: auto;
+}
+
+body{
+    margin: 0;
+/*    box-sizing:  content-box;*/
+}
+
+#message_bar{
+    display: flex;
+}
+
+#upperPanel{
+    height: 24px;
+    background-color: #8e24aa;
+}
+
+#header {
+    height: 56px;
+    background-color: #8e24aa;
+}
+
+#messages {
+    display: flex;
+    flex: auto;
+    overflow-y:scroll;
+    background-color: #0000000a;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+}
+
+#footer {
+    display: flex;
+    padding:0; margin:0;
+    flex-direction: row;
+    height: 56px;
+    background-color: #ffffff;
+    justify-content: space-between;
+}
+
+#messageField {
+    flex:auto;
+    border: none;
+    padding:10px;
+    margin-right:10px;
+    background-color: #00000003;
+}
+
+#messageActions {
+    padding:0; margin:0;
+    width: 60px;
+    background-color: #ffffff;
+}
+
+.messageMy{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    background-color: #f3e5f5;
+    /*clip-path: polygon(30px 0%, 100% 0, 100% 100%, 0% 100%, 20px 90%, 20px 10px, 23px 2px);*/
+    height:80px;
+    width:calc(auto+10px);
+    border-radius: 5px;
+    align-self:flex-end;
+    padding: 10px;
+}
+
+.messageSmb{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+    /*clip-path: polygon(30px 0%, 100% 0, 100% 100%, 0% 100%, 20px 90%, 20px 10px, 23px 2px);*/
+    height:80px;
+    width:calc(auto+10px);
+    border-radius: 5px;
+    align-self:flex-start;
+    padding: 10px;
+}
+
+#arrowBack{
+    position : relative;
+    left : 20px;
+    top : 20px;
+    height : 16px;
+    width : 16px;
+}
+#search{
+    position : relative;
+    left : calc(100% - 80px);
+    top : 20px;
+    height : 16px;
+    width : 16px;
+}
+#more{
+    position : relative;
+    left : calc(100% - 60px);
+    top : 20px;
+    height : 16px;
+    width : 16px;
+}
+
+
+#close{
+    position : relative;
+    left : calc(100% - 20px);
+    top : 4px;
+    height : 16px;
+    width : 16px;
+}
+
+
+#send{
+    position : relative;
+    left : calc(100% - 80px);
+    top : 20px;
+    height : 16px;
+    width : 16px;
+}
+
+
+#attach{
+    position : relative;
+    left : calc(100% - 40px);
+    top : 20px;
+    height : 16px;
+    width : 16px;
+}
+
+.msgText{
+    display: flex;
+    flex-grow: 1;
+}
+.msgTime{
+
+    color:grey;
+}
+
+.chat{
+    height:70px;
+    display: flex;
+}
+.chatIcon{
+    height:70px;
+    width:70px;
+}
+
+.chatTitle{
+    color:#000000de;
+}
+
+.LastMsg{
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    left:auto;
+}
+
+.lastMsgText{
+    align-self: center;
+    flex-grow: 1;
+    color:#00000099;
+}
+
+.lastMsgTime{
+    justify-self: flex-end;
+    color:grey;
+}
+
+.contain_txt{
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+}
+.contain_num{
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    align-items: center;
+}
+.no_msg{
+    visibility: hidden;
+}
+.msg_notification{
+    padding: 3px;
+    width:calc(auto+10px);
+    background-color: #ffd54f;
+    border-radius: 5px;
+}
+.msg_no_notif{
+    padding: 3px;
+    width:calc(auto+10px);
+    border-radius: 5px;
+    background-color: #8e24aa;
+    color: #ffffff;
+}
+.not_icon{
+    display:flex;
+    justify-content: space-between;
+    flex-grow: 1;
+}

@@ -4,15 +4,19 @@ const buildInterface = function () {
     const container = document.createElement('div');
     container.id = 'container';
     document.body.appendChild(container);
+    
     const upperPanel = document.createElement('div');
     upperPanel.id = 'upperPanel';
     document.getElementById('container').appendChild(upperPanel);
+    
     const header = document.createElement('div');
     header.id = 'header';
     document.getElementById('container').appendChild(header);
+    
     const main = document.createElement('div');
     main.id = 'main';
     document.getElementById('container').appendChild(main);
+    
     const footer = document.createElement('div');
     footer.id = 'footer';
     document.getElementById('container').appendChild(footer);
@@ -65,6 +69,14 @@ const add_minor_elements = function(){
     attachment.style.top = '20px';
     attachment.style.height = '16px';
     attachment.style.width = '16px';
+    // attachment.onclick = function(){
+    //     var myFile = document.querySelector('input[type=file]').files[0];
+    //     var image = new Image;
+    //     var url = URL.createObjectURL(myFile);
+    //     image.onload = () => URL.revokeObjectURL();
+    //     image.src = url;
+    //     document.getElementById('messageActions').appendChild(image);
+    // };
     document.getElementById('messageActions').appendChild(attachment);
 
     const send = document.createElement('img');
@@ -95,9 +107,30 @@ const add_minor_elements = function(){
     });
 
     document.addEventListener("sendMsg", function(){
+        const text = document.getElementById("messageField").value;
         const NewMsg = new MyMessage();
         NewMsg.className = 'messageMy';
         NewMsg.innerHTML = document.getElementById("messageField").value;
+        if (text.substring(0, 11) === "SearchUsers"){
+            const name = text.substring(12);
+            const URL = "http://127.0.0.1:5000/search_users/"+name;
+            debugger;
+            fetch(URL, {mode: 'no-cors'}).then(function(response) {
+                console.log(response);
+                console.log(response.body);
+                console.log(response.data);
+                const NewMsg1 = new MyMessage();
+                NewMsg1.className = 'messageMy';
+                NewMsg1.innerHTML = JSON.stringify(response);
+                document.getElementById('main').appendChild(NewMsg1);
+            // fetch(URL, {mode: 'no-cors'})
+            //     .then(function(response) {
+            //     alert(response.headers.get('Content-Type')); // application/json; charset=utf-8
+            //     alert(response.status); // 200
+            //
+            //     return response.json();
+             });
+        }
         document.getElementById("messageField").value = '';
         document.getElementById('main').appendChild(NewMsg);
     });
