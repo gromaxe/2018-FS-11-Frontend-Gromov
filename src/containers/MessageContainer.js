@@ -1,25 +1,11 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import connect from "react-redux/es/connect/connect";
-// import Chat from "./Chat";
 
 class MessageContainer extends React.Component {
     constructor(props) {
         super(props);
-        // this.submitMessage = this.submitMessage.bind(this);
     }
 
-    componentDidMount() {
-        this.scrollToBot();
-    }
-
-    componentDidUpdate() {
-        this.scrollToBot();
-    }
-
-    scrollToBot() {
-        //ReactDOM.findDOMNode(this.refs.chats).scrollTop = ReactDOM.findDOMNode(this.refs.chats).scrollHeight;
-    }
     render() {
         return (
             <div id="messages">{
@@ -31,12 +17,13 @@ class MessageContainer extends React.Component {
                      <div className="msgText">
                          {i.content}
                      </div>
+                     <img src ={i.file}  alt={i.file}
+                          className="attachment"
+                          style={{ display: (i.file===null?'none':'inline-block')}}/>
 
                      <div className="msgTime">
                          {i.time}
                      </div>
-                     <img src ={i.file} height="auto" width="auto" alt="Image preview..."
-                          style={{ display: (i.file===null?'none':'inline-block')}}/>
                  </div>
             )}
             </div>

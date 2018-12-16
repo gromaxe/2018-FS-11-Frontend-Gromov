@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import MessageContainer from '../containers/MessageContainer'
 import back from '../static/ic_arrow_back_white_24dp.png';
 import search from '../static/ic_search_white_24dp.png';
@@ -22,49 +21,51 @@ class Chat extends Component {
     };
 
 
-    sendMessage1() {
-        const text = ReactDOM.findDOMNode(this.messageField.current).value;
-
-        fetch(' http://127.0.0.1:5000/api', {
-            crossDomain:true,
-            mode: 'no-cors',
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                "jsonrpc": "2.0",
-                "method": "search_users",
-                "params": ["Pet"],
-                "id": "1"
-            })
-        })
-            .then(response => {
-                if (response.ok) {
-                    ReactDOM.findDOMNode(this.messageField.current).value = response.json();
-                    return response.json();
-                } else {
-                    throw new Error('Something went wrong ...');
-                }
-            })
-            .then(data => alert({ data }))
-            .catch(error => this.setState({ error, isLoading: false }));
-
-
-        ReactDOM.findDOMNode(this.messageField.current).value = "";
-    }
+    // sendMessage1() {
+    //     const text = ReactDOM.findDOMNode(this.messageField.current).value;
+    //
+    //     fetch(' http://127.0.0.1:5000/api', {
+    //         crossDomain:true,
+    //         mode: 'no-cors',
+    //         method: 'POST',
+    //         headers: {
+    //             'Accept': 'application/json',
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({
+    //             "jsonrpc": "2.0",
+    //             "method": "search_users",
+    //             "params": ["Pet"],
+    //             "id": "1"
+    //         })
+    //     })
+    //         .then(response => {
+    //             if (response.ok) {
+    //                 ReactDOM.findDOMNode(this.messageField.current).value = response.json();
+    //                 return response.json();
+    //             } else {
+    //                 throw new Error('Something went wrong ...');
+    //             }
+    //         })
+    //         .then(data => alert({ data }))
+    //         .catch(error => this.setState({ error, isLoading: false }));
+    //
+    //
+    //     ReactDOM.findDOMNode(this.messageField.current).value = "";
+    // }
 
     submitMessage = () => {
+        const file = (this.file===null?null:this.preview.current.src)
         this.props.sendMessage(
             this.props.match.params.chat_id,
             this.messageField.current.value,
             (new Date().getTime()),
             (new Date().toLocaleTimeString('en-GB')),
-            this.preview.current.src
+            file
         );
         this.file=null;
         this.preview.current.style.display='none';
+        this.preview.current.src="";
         this.messageField.current.value = "";
     };
     handleKeyPress = (event) => {
