@@ -5,20 +5,20 @@ import back from '../static/ic_arrow_back_white_24dp.png';
 import search from '../static/ic_search_white_24dp.png';
 import more from '../static/ic_more_vert_white_24dp.png';
 import attach from '../static/ic_attachment_black_24dp.png';
-import done from '../static/ic_done_white_24dp.png';
-import done_all from '../static/ic_done_all_white_24dp.png';
 import close from '../static/ic_close_white_12pt.png';
 import send from '../static/ic_send_black_24dp.png';
 import connect from "react-redux/es/connect/connect";
-import { BrowserRouter as Router, Route, Link ,withRouter,match} from 'react-router-dom';
+import { Link, match} from 'react-router-dom';
 import * as actionTypes from '../store/actionTypes';
-import * as reducer from '../store/reducer';
 
 class Chat extends Component {
     constructor(props) {
         super(props);
+        this.preview = React.createRef();
+        this.attachFile = React.createRef();
         this.messageField = React.createRef();
         this.messages = React.createRef();
+        this.file=null;
     };
 
 
@@ -52,32 +52,39 @@ class Chat extends Component {
             .catch(error => this.setState({ error, isLoading: false }));
 
 
-        // var NewMsg = new MyMessage(document.getElementById("messageField").value);
-        // document.getElementById('main').appendChild(NewMsg);
         ReactDOM.findDOMNode(this.messageField.current).value = "";
     }
 
-// <Route exact path="/page/:id" location={this.props.location} key={this.props.location.key} render={({ location, match }) => (
-//     <PageStart key={this.props.location.key}  params={match.params}/>
-// )} />
-    toChatList = () => {
-        this.props.pageChanged({page:"chatList"});
-    };
     submitMessage = () => {
         this.props.sendMessage(
             this.props.match.params.chat_id,
-            ReactDOM.findDOMNode(this.messageField.current).value,
+            this.messageField.current.value,
             (new Date().getTime()),
-            (new Date().toLocaleTimeString('en-GB'))
+            (new Date().toLocaleTimeString('en-GB')),
+            this.preview.current.src
         );
-
-        ReactDOM.findDOMNode(this.messageField.current).value = "";
+        this.file=null;
+        this.preview.current.style.display='none';
+        this.messageField.current.value = "";
     };
     handleKeyPress = (event) => {
         if(event.key === 'Enter'){
             this.submitMessage(event);
         }
     };
+
+    previewFile(e) {
+        const reader  = new FileReader();
+        this.file=e.target.files[0];
+        reader.onload = (event) => {
+            this.preview.current.src = event.target.result;
+        };
+        reader.readAsDataURL(e.target.files[0]);
+        //this.preview.current.src=reader.result;
+        this.preview.current.style={ display: (this.file===null?'none':'inline-block')};
+    }
+
+
 
     render() {
         const messages=this.props.messages;
@@ -99,6 +106,10 @@ class Chat extends Component {
                                   chat_owner={this.props.chat_owner}
                                   message_list ={ messages }
                 />
+                <img src ={this.file} height="200" width="200" alt="Image preview..."
+                     ref={this.preview}
+                     style={{ display: (this.file===null?'none':'inline-block')}}/>
+
                 <div id = "footer">
                     <input ref={this.messageField} id = "messageField"
                            placeholder="Введите текст сообщения..."
@@ -106,7 +117,11 @@ class Chat extends Component {
                     >
                     </input>
                     <div id = "messageActions">
-                        <img src={attach} id="attach" alt = ""/>
+                        <input type="file" onChange={(e)=>this.previewFile(e)}
+                                ref={this.attachFile}
+                               style={{ display: 'none'}}>
+                        </input>
+                        <img src={attach} id="attach" alt = "" onClick={() => this.attachFile.current.click()}/>
                         <img src={send} id="send"  alt = "" onClick={this.submitMessage} />
                     </div>
                 </div>
@@ -118,6 +133,7 @@ class Chat extends Component {
 const mapStateToProps = (state)=>{
     return {
         chats: state.chats,
+        user: state.user_id,
         messages: state.messages[state.current_page.chat_id],
         chat_owner:state.chats[state.current_page.chat_id].chat_owner
     }
@@ -125,13 +141,14 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = dispatch =>{
     return {
-        sendMessage: (user_id, content,added_at,time) => dispatch({
+        sendMessage: (user_id, content,added_at,time,file) => dispatch({
             type: actionTypes.ADD_NEW_MESSAGE,
             payload:{
                 user_id : user_id,
                 content : content,
                 added_at : added_at,
-                time : time
+                time : time,
+                file : file
             }
         }),
         pageChanged: (page) => dispatch({

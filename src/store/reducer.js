@@ -19,7 +19,8 @@ export const reducer = (state = initialStore, action)=> {
                         {user_id: action.payload.user_id,
                             content: action.payload.content,
                             added_at: action.payload.added_at,
-                            time: action.payload.time}
+                            time: action.payload.time,
+                            file: action.payload.file}
                     ]}};
         case actionTypes.CHANGE_PAGE:
             switch (action.payload.page.page) {

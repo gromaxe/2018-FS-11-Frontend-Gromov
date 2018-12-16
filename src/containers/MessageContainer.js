@@ -35,6 +35,8 @@ class MessageContainer extends React.Component {
                      <div className="msgTime">
                          {i.time}
                      </div>
+                     <img src ={i.file} height="auto" width="auto" alt="Image preview..."
+                          style={{ display: (i.file===null?'none':'inline-block')}}/>
                  </div>
             )}
             </div>
