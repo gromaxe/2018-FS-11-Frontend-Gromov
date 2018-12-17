@@ -8,9 +8,6 @@ import {Link} from "react-router-dom";
 import * as actionTypes from "../store/actionTypes";
 
 class ChatList extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
 
     render() {

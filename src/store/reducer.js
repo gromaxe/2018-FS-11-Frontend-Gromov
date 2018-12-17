@@ -14,6 +14,10 @@ export const reducer = (state = initialStore, action)=> {
             const chat_id = state.current_page.chat_id;
             return {
                 ...state,
+                chats:[...state.chats,
+                    [state.chats[chat_id]].last_msg=action.payload.content,
+                    [state.chats[chat_id]].last_msg_time=action.payload.content
+                ],
                 messages:{...state.messages,
                     [chat_id]:[...state.messages[chat_id],
                         {user_id: action.payload.user_id,

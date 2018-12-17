@@ -2,14 +2,11 @@ import React, { Component } from 'react';
 import Chat from './components/Chat.js';
 import ChatList from './containers/ChatList.js';
 import connect from "react-redux/es/connect/connect";
-import { BrowserRouter as Router, Route,match} from 'react-router-dom';
+import { BrowserRouter as Router, Route} from 'react-router-dom';
 import './App.css';
 // import {Auth} from './Auth';
 
     class App extends Component {
-        constructor(props) {
-            super(props);
-            };
 
         render() {
             if(true){
@@ -37,10 +34,5 @@ import './App.css';
 
 
 
-const mapStateToProps = (state)=>{
-    return {
-        page : state.current_page
-    }
-};
 
 export default connect()(App);

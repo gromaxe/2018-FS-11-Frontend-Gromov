@@ -7,7 +7,7 @@ import attach from '../static/ic_attachment_black_24dp.png';
 import close from '../static/ic_close_white_12pt.png';
 import send from '../static/ic_send_black_24dp.png';
 import connect from "react-redux/es/connect/connect";
-import { Link, match} from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import * as actionTypes from '../store/actionTypes';
 
 class Chat extends Component {
@@ -107,7 +107,7 @@ class Chat extends Component {
                                   chat_owner={this.props.chat_owner}
                                   message_list ={ messages }
                 />
-                <img src ={this.file} height="200" width="200" alt="Image preview..."
+                <img src ={this.file} height="200" width="200" alt=""
                      ref={this.preview}
                      style={{ display: (this.file===null?'none':'inline-block')}}/>
 
