@@ -5,7 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import { BrowserRouter }  from 'react-router-dom';
+import { BrowserRouter, Route ,Switch}  from 'react-router-dom';
 import {reducer} from './store/reducer';
 
 
@@ -19,7 +19,12 @@ const store = createStore(
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
-        <App />
+            <Switch>
+                <Route exact path='/' render = {(props) => <App {...props} page="chatList"/> } />
+                <Route exact path='/chatList' render = {(props) => <App {...props} page="chatList"/> } />
+                <Route path='/:page/:chat_id' render = {(props) => <App {...props} page="chat"/> }  />
+                <Route component={App}  />
+            </Switch>
         </BrowserRouter>
     </Provider>, document.getElementById('root'));
 serviceWorker.unregister();

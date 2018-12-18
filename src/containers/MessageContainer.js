@@ -6,7 +6,7 @@ class MessageContainer extends React.Component {
     render() {
         return (
             <div id="messages">{
-            this.props.messages.map(i =>
+            this.props.message_list.map(i =>
                  <div className={"message"+
                             (this.props.chat_owner === i.user_id ? "My" : "Smb")}
                       id={i.added_at}
@@ -31,8 +31,8 @@ class MessageContainer extends React.Component {
 
 const mapStateToProps = (state)=>{
     return {
-        messages: state.messages[state.current_page.chat_id],
-        chat_owner: state.current_page.page.chat_owner
+        chat_owner: state.current_page.chat_owner,
+        user_id: state.user_id
     }
 };
 

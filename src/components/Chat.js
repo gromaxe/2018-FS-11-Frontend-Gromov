@@ -19,54 +19,22 @@ class Chat extends Component {
         this.messages = React.createRef();
         this.file=null;
     };
-
-
-    // sendMessage1() {
-    //     const text = ReactDOM.findDOMNode(this.messageField.current).value;
-    //
-    //     fetch(' http://127.0.0.1:5000/api', {
-    //         crossDomain:true,
-    //         mode: 'no-cors',
-    //         method: 'POST',
-    //         headers: {
-    //             'Accept': 'application/json',
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({
-    //             "jsonrpc": "2.0",
-    //             "method": "search_users",
-    //             "params": ["Pet"],
-    //             "id": "1"
-    //         })
-    //     })
-    //         .then(response => {
-    //             if (response.ok) {
-    //                 ReactDOM.findDOMNode(this.messageField.current).value = response.json();
-    //                 return response.json();
-    //             } else {
-    //                 throw new Error('Something went wrong ...');
-    //             }
-    //         })
-    //         .then(data => alert({ data }))
-    //         .catch(error => this.setState({ error, isLoading: false }));
-    //
-    //
-    //     ReactDOM.findDOMNode(this.messageField.current).value = "";
-    // }
-
     submitMessage = () => {
-        const file = (this.file===null?null:this.preview.current.src)
-        this.props.sendMessage(
-            this.props.match.params.chat_id,
-            this.messageField.current.value,
-            (new Date().getTime()),
-            (new Date().toLocaleTimeString('en-GB')),
-            file
-        );
-        this.file=null;
-        this.preview.current.style.display='none';
-        this.preview.current.src="";
-        this.messageField.current.value = "";
+        if(this.messageField.current.value!=="" || this.file ) {
+            const file = (this.file === null ? null : this.preview.current.src)
+            this.props.sendMessage(
+                this.props.user_id,
+                this.messageField.current.value,
+                (new Date().getTime()),
+                (new Date().toLocaleTimeString('en-GB')),
+                file
+            );
+            this.file = null;
+            this.preview.current.style.display = 'none';
+            this.preview.current.src = "";
+            this.messageField.current.value = "";
+            this.attachFile.current.value="";
+        }
     };
     handleKeyPress = (event) => {
         if(event.key === 'Enter'){
@@ -88,23 +56,25 @@ class Chat extends Component {
 
 
     render() {
-        const messages=this.props.messages;
+        const chat_id = this.props.chat_id;
+        console.log(this.props.messages[chat_id]);
+        console.log(this.props.chat_id);
+        const messages=this.props.messages[chat_id];
         return (
             <div id="container">
                 <div id = "upperPanel">
                     <img src={close} id="close" alt = ""/>
                 </div>
                 <div id = "header">
-                    <Link to="/">
+                    <Link to="/chatList">
 
-                        <img src={back} id="arrowBack" alt = "To list of chats"
-                        onClick={this.toChatList}/>
+                        <img src={back} id="arrowBack" alt = "To list of chats"/>
                     </Link>
                     <img src={search} id="search" alt = ""/>
                     <img src={more} id="more" alt = ""/>
                 </div>
                 <MessageContainer ref={this.messages}
-                                  chat_owner={this.props.chat_owner}
+                                  chat_owner={this.props.chats[chat_id].chat_owner}
                                   message_list ={ messages }
                 />
                 <img src ={this.file} height="200" width="200" alt=""
@@ -133,10 +103,10 @@ class Chat extends Component {
 
 const mapStateToProps = (state)=>{
     return {
+        page:state.page,
         chats: state.chats,
-        user: state.user_id,
-        messages: state.messages[state.current_page.chat_id],
-        chat_owner:state.chats[state.current_page.chat_id].chat_owner
+        user_id: state.user_id,
+        messages: state.messages
     }
 };
 

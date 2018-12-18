@@ -11,6 +11,7 @@ class ChatList extends React.Component {
 
 
     render() {
+
         return (
             <div id="container">
                 <div id = "upperPanel">
