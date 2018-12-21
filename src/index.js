@@ -6,7 +6,20 @@ import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route ,Switch}  from 'react-router-dom';
-import {reducer} from './store/reducer';
+import * as actionTypes from "./store_front/actionTypes";
+import {initialState} from './store_front/store';
+
+
+
+const reducer = (state = initialState, action)=> {
+    switch (action.type) {
+        case actionTypes.LOAD_STATE:
+
+            return action.payload.state;
+        default:
+            return initialState;
+    }
+};
 
 
 

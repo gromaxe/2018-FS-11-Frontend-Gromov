@@ -1,8 +1,21 @@
-import * as actionTypes from './actionTypes';
-import * as pages from './pages';
-import { initialStore } from './store';
+// import * as actionTypes from './actionTypes';
+// import * as pages from './pages';
 
-export const reducer = (state = initialStore, action)=> {
+const pages = require('./pages');
+const actionTypes = require('./actionTypes');
+
+
+
+const  initialStore = {
+    current_page:{
+        page:"chatList"
+    },
+    user_id:1,
+    is_authorized:false};
+
+
+
+const reducer = (state = initialStore, action)=> {
     switch (action.type){
         case actionTypes.AUTHORIZE:{
           return  {
@@ -48,4 +61,5 @@ export const reducer = (state = initialStore, action)=> {
         default:
             return state;
     }
-}
+};
+module.exports = reducer;
