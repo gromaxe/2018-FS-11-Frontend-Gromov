@@ -23,7 +23,8 @@ class ChatList extends React.Component {
         })
             .then(response=>response.json())
             .then(data=>{
-                this.props.loadMessages(chat_id,data);
+                 this.props.loadMessages(chat_id,data);
+                this.renderChats();
             });
     };
     renderChats(){

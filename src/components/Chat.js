@@ -19,6 +19,21 @@ class Chat extends Component {
         this.messages = React.createRef();
         this.file=null;
     };
+
+    componentDidMount() {
+        fetch('http://127.0.0.1:8081/getStateFromServer', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response=>response.json())
+            .then(state=>{
+                this.props.LOAD_STATE(state)
+            });
+
+    };
     submitMessage = () => {
         if(this.messageField.current.value!=="" || this.file ) {
             const file = (this.file === null ? null : this.preview.current.src)
@@ -83,7 +98,9 @@ class Chat extends Component {
     }
 
 
+    renderMessages(){
 
+    };
     render() {
         const chat_id = this.props.chat_id;
         const messages=this.props.messages[chat_id];

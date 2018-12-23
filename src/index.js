@@ -14,7 +14,6 @@ import {initialState} from './store_front/store';
 const reducer = (state = initialState, action)=> {
     switch (action.type) {
         case actionTypes.LOAD_STATE:
-
             return action.payload.state;
         default:
             return initialState;

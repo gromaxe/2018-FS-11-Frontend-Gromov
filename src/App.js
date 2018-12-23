@@ -6,7 +6,6 @@ import * as actionTypes from "./store_front/actionTypes";
 
 import { withRouter } from 'react-router-dom'
 import ChatList from "./containers/ChatList";
-// import {Auth} from './Auth';
 
     class App extends Component {
 
