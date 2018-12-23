@@ -8,7 +8,7 @@ import close from '../static/ic_close_white_12pt.png';
 import send from '../static/ic_send_black_24dp.png';
 import connect from "react-redux/es/connect/connect";
 import { Link} from 'react-router-dom';
-import * as actionTypes from '../store/actionTypes';
+import * as actionTypes from '../store_front/actionTypes';
 
 class Chat extends Component {
     constructor(props) {
@@ -19,22 +19,66 @@ class Chat extends Component {
         this.messages = React.createRef();
         this.file=null;
     };
+
+    componentDidMount() {
+        fetch('http://127.0.0.1:8081/getStateFromServer', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response=>response.json())
+            .then(state=>{
+                this.props.LOAD_STATE(state)
+            });
+
+    };
     submitMessage = () => {
         if(this.messageField.current.value!=="" || this.file ) {
             const file = (this.file === null ? null : this.preview.current.src)
-            this.props.sendMessage(
-                this.props.user_id,
-                this.messageField.current.value,
-                (new Date().getTime()),
-                (new Date().toLocaleTimeString('en-GB')),
-                file
-            );
+
+            fetch('http://127.0.0.1:8081/new_message', {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify({
+                        chat_id:this.props.chat_id,
+                        user_id:this.props.user_id,
+                        content:this.messageField.current.value,
+                        added_at:(new Date().getTime()),
+                        time:(new Date().toLocaleTimeString('en-GB')),
+                        file:file})
+            })
+                .then(
+                    fetch('http://127.0.0.1:8081/getStateFromServer', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                        .then(response=>response.json())
+                        .then(state=>{
+                            console.log(state);
+                            this.props.LOAD_STATE(state);
+                        })
+
+                )
+                .catch( err => {
+                        console.log(err)
+
+                });
+
+            //
             this.file = null;
             this.preview.current.style.display = 'none';
             this.preview.current.src = "";
             this.messageField.current.value = "";
             this.attachFile.current.value="";
-        }
+        };
     };
     handleKeyPress = (event) => {
         if(event.key === 'Enter'){
@@ -54,11 +98,8 @@ class Chat extends Component {
     }
 
 
-
     render() {
         const chat_id = this.props.chat_id;
-        console.log(this.props.messages[chat_id]);
-        console.log(this.props.chat_id);
         const messages=this.props.messages[chat_id];
         return (
             <div id="container">
@@ -112,20 +153,16 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = dispatch =>{
     return {
-        sendMessage: (user_id, content,added_at,time,file) => dispatch({
-            type: actionTypes.ADD_NEW_MESSAGE,
-            payload:{
-                user_id : user_id,
-                content : content,
-                added_at : added_at,
-                time : time,
-                file : file
-            }
-        }),
         pageChanged: (page) => dispatch({
             type: actionTypes.CHANGE_PAGE,
             payload:{
                 page:page
+            }
+        }),
+        LOAD_STATE: (state) => dispatch({
+            type: actionTypes.LOAD_STATE,
+            payload:{
+                state:state
             }
         })
     }

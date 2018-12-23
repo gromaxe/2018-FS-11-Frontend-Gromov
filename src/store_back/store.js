@@ -1,4 +1,4 @@
-export const initialStore = {
+module.exports = {
     current_page:{
         page:"chatList"
     },
