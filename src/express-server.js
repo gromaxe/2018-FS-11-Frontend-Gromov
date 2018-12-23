@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require("body-parser");
-const fileUpload = require('express-fileupload');
 const redux = require('redux');
 const reducer = require('./store_back/reducer');
 const init_store= require('./store_back/store');
@@ -56,12 +55,6 @@ app.put('/new_message', function(req, res) {
             }
         });
         res.send(store.getState().messages[req.body.chat_id]);
-    //     if(!(req.body.chat_id in messages)) {
-    //         return res.status(400).send('No chat id');
-    //     }
-    //     res.send("ok");
-    // }
-    // return res.status(400).send('No chat id');
 });
 
 app.listen('8081');
