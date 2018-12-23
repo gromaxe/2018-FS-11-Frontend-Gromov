@@ -1,14 +1,5 @@
-// import * as actionTypes from './actionTypes';
-// import * as pages from './pages';
-
-const pages = require('./pages');
 const actionTypes = require('./actionTypes');
-
-
-
 const  initialStore = require('./store');
-
-
 
 const reducer = (state = initialStore, action)=> {
     switch (action.type){
