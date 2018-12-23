@@ -98,9 +98,6 @@ class Chat extends Component {
     }
 
 
-    renderMessages(){
-
-    };
     render() {
         const chat_id = this.props.chat_id;
         const messages=this.props.messages[chat_id];

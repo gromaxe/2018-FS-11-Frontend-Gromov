@@ -29,14 +29,6 @@ import ChatList from "./containers/ChatList";
                 case "chat":
                     console.log("we are at chat",this.props.match.params.chat_id);
                     if(typeof (this.props.chats)!=='undefined') {
-                        // if (this.props.current_page !== "chat") {
-                        //     console.log(this.props.current_page);
-                        //     this.props.pageChanged({
-                        //         page: "chat",
-                        //         chat_id: this.props.match.params.chat_id,
-                        //         chat_owner: this.props.chats[this.props.match.params.chat_id].chat_owner
-                        //     });
-                        // }
                         return (
                             <Chat chat_id={this.props.match.params.chat_id}/>
                         );
