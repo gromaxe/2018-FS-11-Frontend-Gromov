@@ -28,7 +28,7 @@ import ChatList from "./containers/ChatList";
             switch (this.props.page) {
                 case "chat":
                     console.log("we are at chat",this.props.match.params.chat_id);
-                    if(typeof (this.props.chats)!=='undefined') {
+                    if(typeof (this.props.chats)) {
                         return (
                             <Chat chat_id={this.props.match.params.chat_id}/>
                         );
